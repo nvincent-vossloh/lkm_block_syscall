@@ -1,0 +1,9 @@
+*.o
+*.cmd
+*.cmd.c
+*.mod
+*.mod.c
+Module.symvers
+modules.order
+*.ko
+userland
