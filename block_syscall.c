@@ -20,11 +20,7 @@ static int bs_open(struct inode *inode, struct file *file)
 {
 	int err;
 	pr_info("acquire mutex\n");
-	err = mutex_lock_interruptible(&bs_mut);
-	if (err != 0) {
-		pr_err("Error while getting mutex: %d\n", err);
-		return err;
-	}
+	mutex_lock(&bs_mut);
 	mutex_unlock(&bs_mut);
 	pr_info("got mutex\n");
 	return 0;
@@ -75,7 +71,7 @@ static int __init bs_init(void)
 	device_create(bs_class, NULL, device_number, NULL, "block_syscall_dev");
 
 	mutex_init(&bs_mut);
-	//mutex_lock_interruptible(&bs_mut);
+	mutex_lock_interruptible(&bs_mut);
 
 	pr_info("module loaded with major num %d\n", MAJOR(device_number));
 	return 0;
